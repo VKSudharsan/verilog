@@ -1,0 +1,77 @@
+#! /usr/bin/vvp
+:ivl_version "12.0 (stable)";
+:ivl_delay_selection "TYPICAL";
+:vpi_time_precision + 0;
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/system.vpi";
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/vhdl_sys.vpi";
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/vhdl_textio.vpi";
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/v2005_math.vpi";
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/va_math.vpi";
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/v2009.vpi";
+S_0x5cb555e54150 .scope package, "$unit" "$unit" 2 1;
+ .timescale 0 0;
+S_0x5cb555e542e0 .scope module, "tb_half_adder_nonblock" "tb_half_adder_nonblock" 3 2;
+ .timescale 0 0;
+v0x5cb555e68320_0 .var "a", 0 0;
+v0x5cb555e683e0_0 .var "b", 0 0;
+v0x5cb555e684b0_0 .net "carry", 0 0, v0x5cb555e680e0_0;  1 drivers
+v0x5cb555e685b0_0 .net "sum", 0 0, v0x5cb555e681b0_0;  1 drivers
+S_0x5cb555e1a500 .scope module, "uut" "half_adder_nonblock" 3 7, 4 2 0, S_0x5cb555e542e0;
+ .timescale 0 0;
+    .port_info 0 /INPUT 1 "a";
+    .port_info 1 /INPUT 1 "b";
+    .port_info 2 /OUTPUT 1 "sum";
+    .port_info 3 /OUTPUT 1 "carry";
+v0x5cb555e1a750_0 .net "a", 0 0, v0x5cb555e68320_0;  1 drivers
+v0x5cb555e68020_0 .net "b", 0 0, v0x5cb555e683e0_0;  1 drivers
+v0x5cb555e680e0_0 .var "carry", 0 0;
+v0x5cb555e681b0_0 .var "sum", 0 0;
+E_0x5cb555e54c80 .event anyedge, v0x5cb555e1a750_0, v0x5cb555e68020_0;
+    .scope S_0x5cb555e1a500;
+T_0 ;
+    %wait E_0x5cb555e54c80;
+    %load/vec4 v0x5cb555e1a750_0;
+    %load/vec4 v0x5cb555e68020_0;
+    %xor;
+    %assign/vec4 v0x5cb555e681b0_0, 0;
+    %load/vec4 v0x5cb555e1a750_0;
+    %load/vec4 v0x5cb555e68020_0;
+    %and;
+    %assign/vec4 v0x5cb555e680e0_0, 0;
+    %jmp T_0;
+    .thread T_0, $push;
+    .scope S_0x5cb555e542e0;
+T_1 ;
+    %vpi_call/w 3 15 "$dumpfile", "half_adder_nonblock.vcd" {0 0 0};
+    %vpi_call/w 3 16 "$dumpvars", 32'sb00000000000000000000000000000000, S_0x5cb555e542e0 {0 0 0};
+    %vpi_call/w 3 18 "$monitor", "Time=%0t a=%b b=%b sum=%b carry=%b", $time, v0x5cb555e68320_0, v0x5cb555e683e0_0, v0x5cb555e685b0_0, v0x5cb555e684b0_0 {0 0 0};
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x5cb555e68320_0, 0, 1;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x5cb555e683e0_0, 0, 1;
+    %delay 10, 0;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x5cb555e68320_0, 0, 1;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0x5cb555e683e0_0, 0, 1;
+    %delay 10, 0;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0x5cb555e68320_0, 0, 1;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x5cb555e683e0_0, 0, 1;
+    %delay 10, 0;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0x5cb555e68320_0, 0, 1;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0x5cb555e683e0_0, 0, 1;
+    %delay 10, 0;
+    %vpi_call/w 3 26 "$finish" {0 0 0};
+    %end;
+    .thread T_1;
+# The file index is used to find the file name in the following table.
+:file_names 5;
+    "N/A";
+    "<interactive>";
+    "-";
+    "halfaddertb.v";
+    "halfadder.v";
